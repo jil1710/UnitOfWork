@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UnitOfWork.Data;
+using UnitOfWork.MiddleWare;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseErrorHandalingMiddleware();
 app.UseRouting();
 
 app.UseAuthorization();
