@@ -1,4 +1,4 @@
-﻿namespace Practical_20.Interfaces
+﻿namespace UnitOfWork.Interfaces
 {
 	public interface IRepository<T> where T : class
 	{

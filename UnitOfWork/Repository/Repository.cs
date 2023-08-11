@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Practical_20.Data;
-using Practical_20.Interfaces;
+using UnitOfWork.Data;
+using UnitOfWork.Interfaces;
 
-namespace Practical_20.UnitOfWork
+namespace UnitOfWork.UnitOfWork
 {
 	public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 	{
 		private DbSet<TEntity> _dbSet;
 
-		public Repository(DatabaseContext context)
+		public Repository(DataContext context)
 		{
 			this._dbSet = context.Set<TEntity>();
 		}

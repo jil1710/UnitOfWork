@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UnitOfWork.Interfaces;
 using UnitOfWork.Data;
 using UnitOfWork.MiddleWare;
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddMvc();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork.Repo.UnitOfWork>();
 
 builder.Services.AddDbContext<DataContext>(options =>
 {
