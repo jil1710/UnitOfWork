@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 using UnitOfWork.Interfaces;
 using UnitOfWork.Models;
@@ -16,6 +17,7 @@ namespace UnitOfWork.Controllers
 			_repository = _unitOfWork.GetRepository<User>();
 		}
 
+		[OutputCache(PolicyName = "chaching")]
 		public async Task<IActionResult> Index()
 		{
 			return _repository.GetAll() != null ?
@@ -23,7 +25,9 @@ namespace UnitOfWork.Controllers
 						Problem("Entity set 'DatabaseContext.Users'  is null.");
 		}
 
-		public async Task<IActionResult> Details(int? id)
+
+        [OutputCache(PolicyName = "chaching",VaryByQueryKeys = new[] {"id"})]
+        public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null || _repository.GetAll() == null)
 			{

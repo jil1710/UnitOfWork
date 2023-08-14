@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
 using UnitOfWork.Interfaces;
 using UnitOfWork.Models;
@@ -19,14 +20,17 @@ namespace UnitOfWork.Controllers
 			_logger = logger;
 		}
 
-		public async Task<IActionResult> Index()
+
+        [OutputCache(PolicyName = "chaching")]
+        public async Task<IActionResult> Index()
 		{
 			_logger.LogInformation("List of Students!");
 			return View(_repository.GetAll().ToList());
 						
 		}
 
-		public async Task<IActionResult> Details(int? id)
+        [OutputCache(PolicyName = "chaching", VaryByQueryKeys = new[] { "id" })]
+        public async Task<IActionResult> Details(int? id)
 		{
 			if (id == null || _repository.GetAll() == null)
 			{
