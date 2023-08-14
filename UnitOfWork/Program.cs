@@ -18,6 +18,16 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddOutputCache(options =>
+{
+    options.AddPolicy("caching",x=>
+    {
+        x.Cache();
+        x.Expire(TimeSpan.FromMinutes(2));
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +37,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseOutputCache();
 
 app.UseSerilogRequestLogging();
 
